@@ -11,8 +11,7 @@ from lexicon import (
     unauthorized_text,
     input_text,
     fault_text,
-    error_text,
-    success_text
+    error_text
 )
 from utils import create_note
 
@@ -38,8 +37,9 @@ async def start(message: types.Message):
 @dp.message(AuthFilter())
 async def process_get_message(message: types.Message):
     if message.text:
-        answer = await create_note(database_id, notion_token, message.text)
-        await message.answer([error_text, success_text][answer])
+        success = await create_note(database_id, notion_token, message.text)
+        if not success:
+            await message.answer(error_text)
     else:
         await message.answer(fault_text + input_text)
 
@@ -55,12 +55,4 @@ async def process_unauthorized(message: types.Message):
 
 
 if __name__ == '__main__':
-
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(filename)s:%(lineno)d #%(levelname)-8s '
-               '[%(asctime)s] - %(name)s - %(message)s')
-
-    logger.info('Starting bot')
-
     dp.run_polling(bot)
