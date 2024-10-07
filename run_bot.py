@@ -5,8 +5,14 @@ from aiogram.filters import CommandStart
 from dotenv import load_dotenv
 
 from filters import AuthFilter
-from lexicon import greetings_text, unauthorized_text, input_text, fault_text, \
-    error_text, success_text
+from lexicon import (
+    greetings_text,
+    unauthorized_text,
+    input_text,
+    fault_text,
+    error_text,
+    success_text
+)
 from utils import create_note
 
 load_dotenv()
@@ -15,7 +21,6 @@ BOT_TOKEN: str = os.getenv("BOT_TOKEN")
 bot: Bot = Bot(token=BOT_TOKEN)
 dp: Dispatcher = Dispatcher()
 
-auth_ids: list[int] = list(map(int, os.getenv("AUTH_IDS").split()))
 database_id: str = os.getenv("DATABASE_ID")
 notion_token: str = os.getenv("NOTION_TOKEN")
 

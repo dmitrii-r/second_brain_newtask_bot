@@ -1,7 +1,12 @@
+import os
+
 from aiogram import types
 from aiogram.filters import BaseFilter
+from dotenv import load_dotenv
 
-from run_bot import auth_ids
+load_dotenv()
+
+auth_ids: list[int] = list(map(int, os.getenv("AUTH_IDS").split()))
 
 
 class AuthFilter(BaseFilter):
